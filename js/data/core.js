@@ -1,5 +1,5 @@
 // Shared content registry. Each topic file pushes into these arrays.
-// Load order: _core.js first, then topic files, then app scripts.
+// Load order: core.js first, then topic files, then app scripts.
 window.SD = {
   topics: [], // {id, name, short, color, examined, scope, notes:[{id,title,html}], cram}
   cards: [],  // {id, topic, outcome, front, back}

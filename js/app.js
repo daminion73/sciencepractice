@@ -89,7 +89,7 @@
       (weakest ? '<a class="tile" href="#/topic/' + weakest.t.id + '"><h3>' + dot(weakest.t) + 'Weakest: ' + esc(weakest.t.short) + '</h3><p>Readiness ' + weakest.s.ready + '%. Read the notes, then quiz it.</p></a>' : '') +
       '<a class="tile" href="#/cards"><h3>Flashcards</h3><p>' + (dueCount ? dueCount + ' cards due for review now.' : 'Start a spaced-repetition session.') + '</p></a>' +
       '<a class="tile" href="#/quiz?mode=smart&n=20"><h3>Smart quiz (20)</h3><p>Prioritises questions you haven\'t seen or got wrong.</p></a>' +
-      (SD.mcq.some(function (q) { return q.pic; }) ? '<a class="tile" href="#/quiz?mode=pics&n=20"><h3>Picture quiz</h3><p>Questions on the diagrams and photos from your slides, like the exam\'s diagram questions.</p></a>' : '') +
+      (SD.mcq.some(function (q) { return q.pic; }) ? '<a class="tile" href="#/quiz?mode=pics&n=20"><h3>Picture quiz</h3><p>Questions on the diagrams and photos from your slides and notes, like the exam\'s diagram questions.</p></a>' : '') +
       (wrong ? '<a class="tile" href="#/quiz?mode=wrong&n=20"><h3>Fix mistakes</h3><p>' + wrong + ' question(s) you last got wrong.</p></a>' : '') +
       '<a class="tile" href="#/written"><h3>Written answers</h3><p>Practise 60% of the exam: the short/extended responses, marked against criteria.</p></a>' +
       '<a class="tile" href="#/tools"><h3>Punnett, pedigrees, galvanic cells…</h3><p>Unlimited generated practice for the skills that always appear.</p></a></div>' +
@@ -131,7 +131,7 @@
     var s = stats(tid), p = params(), tab = p.tab || 'notes', nImg = byTopic(SD.images || [], tid).length, testme = localStorage.getItem('sy-testme') === '1';
     var head = '<h1>' + dot(t) + ' ' + esc(t.name) + '</h1><p class="sub">' + (t.examined ? '<span class="tag good">On the yearly</span> ' : '<span class="tag warn">Not on the yearly</span> ') + esc(t.scope || '') + '</p>' +
       '<div class="row no-print" style="margin-bottom:16px"><a class="btn' + (tab === 'notes' ? ' pri' : '') + '" href="#/topic/' + tid + '">Notes</a><a class="btn' + (tab === 'cram' ? ' pri' : '') + '" href="#/topic/' + tid + '?tab=cram">Cram sheet</a>' +
-      (nImg ? '<a class="btn' + (tab === 'slides' ? ' pri' : '') + '" href="#/topic/' + tid + '?tab=slides">Slides (' + nImg + ')</a>' : '') +
+      (nImg ? '<a class="btn' + (tab === 'slides' ? ' pri' : '') + '" href="#/topic/' + tid + '?tab=slides">Pictures (' + nImg + ')</a>' : '') +
       '<span class="spacer"></span><a class="btn" href="#/cards?topic=' + tid + '">Cards (' + s.cards + ')</a><a class="btn" href="#/quiz?topic=' + tid + '&n=15">Quiz (' + s.mcq + ')</a><a class="btn" href="#/written?topic=' + tid + '">Written (' + s.saq + ')</a></div>';
     if (tab === 'cram') { $main.innerHTML = head + '<div class="note note-body">' + (t.cram || '<p class="muted">No cram sheet.</p>') + '</div><button class="btn no-print" onclick="window.print()">Print</button>'; return; }
     if (tab === 'slides') {
@@ -147,7 +147,7 @@
     var body = (t.notes || []).map(function (n) {
       var nq = SD.mcq.filter(function (q) { return q.outcome === n.id; }).length, nc = SD.cards.filter(function (c) { return c.outcome === n.id; }).length, ims = imgsFor(n.id);
       return '<section class="note" id="' + n.id + '"><h3>' + n.title + '</h3><div class="note-body">' + n.html + '</div>' +
-        (ims.length ? '<div class="figs-head kicker">From your slides</div><div class="figs">' + ims.map(function (im) { return figHTML(im, n.id); }).join('') + '</div>' : '') +
+        (ims.length ? '<div class="figs-head kicker">Pictures from your slides &amp; notes</div><div class="figs">' + ims.map(function (im) { return figHTML(im, n.id); }).join('') + '</div>' : '') +
         (nq ? '<div class="qc" data-qc="' + n.id + '"></div>' : '') +
         '<div class="note-foot">' +
         '<label class="chk"><input type="checkbox" data-read="' + n.id + '"' + (Store.isRead(n.id) ? ' checked' : '') + '> I\'ve learnt this</label><span class="spacer"></span>' +
